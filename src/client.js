@@ -5,7 +5,7 @@ var needle      = Promise.promisifyAll(require('needle'));
 var createError = require('create-error');
 var internals   = {};
 
-function IronClient (options) {}
+function IronClient () {}
 
 var IronError = createError('IronError');
 

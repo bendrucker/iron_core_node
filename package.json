@@ -13,5 +13,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/iron-io/iron-core-node.git"
+  },
+  "devDependencies": {
+    "gulp": "3",
+    "gulp-jshint": "1",
+    "gulp-load-plugins": "~0.6.0",
+    "jshint-stylish": "1"
   }
 }
