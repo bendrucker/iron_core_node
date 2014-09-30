@@ -4,8 +4,12 @@
   "description": "Core library for Iron products",
   "homepage": "https://github.com/iron-io/iron-core-node",
   "author": "Andrew Kirilenko & Iron.io, Inc",
-  "main": "./lib/client",
-  "dependencies": {},
+  "main": "./src/client",
+  "dependencies": {
+    "bluebird": "2",
+    "create-error": "~0.3.1",
+    "needle": "~0.7.10"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/iron-io/iron-core-node.git"
