@@ -3,7 +3,6 @@
 var _         = require('lodash');
 var fs        = require('fs');
 var user      = require('passwd-user');
-var internals = {};
 var prefix    = 'iron';
 var values    = [
   'project_id',
@@ -19,7 +18,7 @@ exports.file = function (path) {
     var data = JSON.parse(fs.readFileSync(path));
     return _.extend(
       _.pick(data, values),
-      _.pick(data[internals.product], values)
+      _.pick(data[exports.product], values)
     );
   }
   catch (e) {}
@@ -38,7 +37,7 @@ exports.env = function () {
       },
       {
         configKey: value,
-        envKey: envify([prefix, internals.product, value])
+        envKey: envify([prefix, exports.product, value])
       });
       return search;
     }, [])
@@ -50,7 +49,7 @@ exports.env = function () {
 
 
 exports.load = function (product, overrides) {
-  internals.product = product;
+  exports.product = product;
   return _.extend(
     {},
     exports.file(user.sync(process.getuid()).homedir),
