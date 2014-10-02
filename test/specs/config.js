@@ -37,7 +37,7 @@ describe('config', function () {
     });
 
     it('overrides with product values', function () {
-      config.product = 'iron_mq';
+      config.product = 'mq';
       stubFile({
         token: 'rootToken',
         iron_mq: {
@@ -48,7 +48,7 @@ describe('config', function () {
     });
 
     it('exludes unexpected product values', function () {
-      config.product = 'iron_mq';
+      config.product = 'mq';
       stubFile({
         iron_mq: {
           foo: 'bar'

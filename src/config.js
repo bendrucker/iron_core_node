@@ -18,7 +18,7 @@ exports.file = function (path) {
     var data = JSON.parse(fs.readFileSync(path));
     return _.extend(
       _.pick(data, values),
-      _.pick(data[exports.product], values)
+      _.pick(data[prefix + '_' + exports.product], values)
     );
   }
   catch (e) {}
