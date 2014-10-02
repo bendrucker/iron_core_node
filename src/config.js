@@ -29,8 +29,8 @@ function envify (parts) {
 }
 
 exports.env = function () {
-  values
-    .reduce(function (value, search) {
+  return values
+    .reduce(function (search, value) {
       search.push({
         configKey: value,
         envKey: envify([prefix, value])
@@ -41,8 +41,11 @@ exports.env = function () {
       });
       return search;
     }, [])
-    .reduce(function (pair, config) {
-      config[pair.configKey] = config[pair.configKey] || process.env[pair.envKey];
+    .reduce(function (config, pair) {
+      var envValue = process.env[pair.envKey];
+      if (typeof envValue !== 'undefined') {
+        config[pair.configKey] = envValue;
+      }
       return config;
     }, {});
 };

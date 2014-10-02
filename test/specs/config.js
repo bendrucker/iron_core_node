@@ -66,4 +66,35 @@ describe('config', function () {
 
   });
 
+  describe('#env', function () {
+
+    var original = process.env;
+    afterEach(function () {
+      process.env = original;
+    });
+
+    it('returns expected global values', function () {
+      process.env = {
+        IRON_TOKEN: 'tok',
+        IRON_PROJECT_ID: 'pid'
+      };
+      expect(config.env()).to.deep.equal({
+        token: 'tok',
+        project_id: 'pid'
+      });
+    });
+
+    it('overrides globals with product values', function () {
+      config.product = 'mq';
+      process.env = {
+        IRON_TOKEN: 'global',
+        IRON_MQ_TOKEN: 'product'
+      };
+      expect(config.env()).to.deep.equal({
+        token: 'product'
+      });
+    });
+
+  });
+
 });
