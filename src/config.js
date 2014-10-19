@@ -18,7 +18,7 @@ exports.file = function (path) {
     var data = JSON.parse(fs.readFileSync(path));
     return _.extend(
       _.pick(data, values),
-      _.pick(data[prefix + '_' + exports.product], values)
+      _.pick(data[prefix + '_' + this.product], values)
     );
   }
   catch (e) {}
@@ -29,6 +29,7 @@ function envify (parts) {
 }
 
 exports.env = function () {
+  var self = this;
   return values
     .reduce(function (search, value) {
       search.push({
@@ -37,7 +38,7 @@ exports.env = function () {
       },
       {
         configKey: value,
-        envKey: envify([prefix, exports.product, value])
+        envKey: envify([prefix, self.product, value])
       });
       return search;
     }, [])
@@ -52,12 +53,14 @@ exports.env = function () {
 
 
 exports.load = function (product, overrides) {
-  exports.product = product;
+  var self = {
+    product: product
+  };
   return _.extend(
     {},
-    exports.file(untildify('~/.iron.json')),
-    exports.env(),
-    exports.file(process.cwd() + '/iron.json'),
+    exports.file.call(self, untildify('~/.iron.json')),
+    exports.env.call(self),
+    exports.file.call(self, process.cwd() + '/iron.json'),
     overrides
   );
 };
