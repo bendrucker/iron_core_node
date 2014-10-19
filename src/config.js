@@ -2,7 +2,7 @@
 
 var _         = require('lodash');
 var fs        = require('fs');
-var user      = require('passwd-user');
+var untildify = require('untildify');
 var prefix    = 'iron';
 var values    = [
   'project_id',
@@ -55,7 +55,7 @@ exports.load = function (product, overrides) {
   exports.product = product;
   return _.extend(
     {},
-    exports.file(user.sync(process.getuid()).homedir),
+    exports.file(untildify('~/.iron.json')),
     exports.env(),
     exports.file(process.cwd() + '/iron.json'),
     overrides

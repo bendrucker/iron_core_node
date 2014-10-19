@@ -12,8 +12,8 @@
     "bluebird": "2",
     "create-error": "~0.3.1",
     "needle": "~0.7.10",
-    "passwd-user": "1",
-    "lodash": "2"
+    "lodash": "2",
+    "untildify": "1"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "mocha": "1",
     "sinon": "1",
     "sinon-as-promised": "^1",
-    "sinon-chai": "2"
+    "sinon-chai": "2",
+    "tildify": "1"
   }
 }

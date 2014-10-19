@@ -1,9 +1,11 @@
 'use strict';
 
-var expect = require('../expect');
-var sinon  = require('sinon');
-var fs     = require('fs');
-var config = require('../../src/config');
+var expect  = require('../expect');
+var sinon   = require('sinon');
+var fs      = require('fs');
+var tildify = require('tildify');
+var path    = require('path');
+var config  = require('../../src/config');
 
 describe('config', function () {
 
@@ -93,6 +95,26 @@ describe('config', function () {
       expect(config.env()).to.deep.equal({
         token: 'product'
       });
+    });
+
+  });
+
+  describe('#load', function () {
+
+    beforeEach(function () {
+      sandbox.stub(config, 'file');
+    });
+
+    it('loads .iron.json from the home directory', function () {
+      config.load();
+      expect(tildify(config.file.firstCall.args[0]))
+        .to.equal('~/.iron.json');
+    });
+
+    it('loads iron.json from the working directory', function () {
+      config.load();
+      expect(config.file)
+        .to.have.been.calledWith(path.resolve('./iron.json'));
     });
 
   });
