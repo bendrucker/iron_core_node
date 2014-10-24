@@ -61,3 +61,5 @@ Object.defineProperty(IronClient.prototype, 'headers', {
     return 'iron-node/v' + this.version;
   }
 });
+
+module.exports = IronClient;
