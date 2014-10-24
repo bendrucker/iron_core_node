@@ -3,13 +3,12 @@
 var Promise     = require('bluebird');
 var needle      = Promise.promisifyAll(require('needle'));
 var createError = require('create-error');
-var internals   = {};
 
 function IronClient () {}
 
 var IronError = createError('IronError');
 
-internals.request = function () {
+function request = function () {
   // arguments: method, url, data, options
   return needle.requestAsync.apply(needle, arguments)
     .spread(function (response) {
@@ -28,5 +27,5 @@ internals.request = function () {
 
 IronClient.prototype.request = function () {
   // arguments: method, url, data, options
-  return internals.request.apply(arguments);
+  return request.apply(null, arguments);
 };
