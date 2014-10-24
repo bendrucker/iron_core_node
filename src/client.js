@@ -3,7 +3,7 @@
 var Promise     = require('bluebird');
 var needle      = Promise.promisifyAll(require('needle'));
 var createError = require('create-error');
-var pkg         = require('./pkg');
+var pkg         = require('../package.json');
 
 function IronClient () {}
 
@@ -42,7 +42,7 @@ IronClient.prototype.request = function () {
   var retries = 0;
   var max     = this.maxRetries;
   var delay   = this.retryDelay;
-  
+
   function attemptRequest () {
     return request.apply(null, args)
       .catch(retryFilter(retries, max), function () {
