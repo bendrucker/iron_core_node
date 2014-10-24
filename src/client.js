@@ -9,7 +9,7 @@ function IronClient () {}
 
 var IronError = createError('IronError');
 
-function request = function () {
+function request () {
   // arguments: method, url, data, options
   return needle.requestAsync.apply(needle, arguments)
     .spread(function (response) {
@@ -24,17 +24,38 @@ function request = function () {
       }
     });
 
-};
+}
+
+IronClient.prototype.maxRetries = 5;
+// initial retry delay 
+IronClient.prototype.retryDelay = 100;
+
+function retryFilter (retries, max) {
+  return function (err) {
+    return retries < max && err.statusCode && err.statusCode === 503;
+  };
+}
 
 IronClient.prototype.request = function () {
   // arguments: method, url, data, options
-  return request.apply(null, arguments);
+  var retries = 0;
+  var max = this.maxRetries;
+  var delay = this.retryDelay;
+  function attemptRequest () {
+    return request.apply(null, arguments)
+      .catch(retryFilter(retries, max), function () {
+        delay = this.retryDelay * 2^retries;
+        retries++;
+        return Promise.delay(delay).then(attemptRequest.apply(null, arguments));
+      });
+  }
+  return attemptRequest();
 };
 
-IronClient.prototype.version = pkg.version
+IronClient.prototype.version = pkg.version;
 
 Object.defineProperty(IronClient.prototype, 'headers', {
   get: function () {
-    return 'iron-node/v' + this.version
+    return 'iron-node/v' + this.version;
   }
 });
