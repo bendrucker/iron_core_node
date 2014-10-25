@@ -38,6 +38,7 @@ function retryFilter (retries, max) {
 
 IronClient.prototype.request = function () {
   // arguments: method, url, data, options
+  var self    = this;
   var args    = arguments;
   var retries = 0;
   var max     = this.maxRetries;
@@ -46,7 +47,7 @@ IronClient.prototype.request = function () {
   function attemptRequest () {
     return request.apply(null, args)
       .catch(retryFilter(retries, max), function () {
-        delay = this.retryDelay * 2^retries;
+        delay = self.retryDelay * Math.pow(2, retries);
         retries++;
         return Promise.delay(delay).then(attemptRequest.apply(null, args));
       });
