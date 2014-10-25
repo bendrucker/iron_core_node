@@ -49,7 +49,9 @@ IronClient.prototype.request = function () {
       .catch(retryFilter(retries, max), function () {
         delay = self.retryDelay * Math.pow(2, retries);
         retries++;
-        return Promise.delay(delay).then(attemptRequest.apply(null, args));
+        return Promise.delay(delay).then(function () {
+          return attemptRequest.apply(null, args)
+        });
       });
   }
   return attemptRequest();
