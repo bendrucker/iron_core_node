@@ -14,7 +14,7 @@ function IronClient (product, options) {
 IronClient.IronError = createError('IronError');
 
 IronClient.prototype.base = function () {
-  return util.format('%s://%s:%d', this.scheme, this.host, this.port);
+  return util.format('%s://%s:%d', this.config.scheme, this.config.host, this.config.port);
 }
 
 function request () {

@@ -8,20 +8,19 @@ describe('IronClient', function () {
 
   var client;
   beforeEach(function () {
-    client = new Client();
+    client = new Client('product', {
+      scheme: 'https',
+      host: 'iron',
+      port: 443
+    });
   });
 
   describe('#base', function () {
 
     it('generates a url from the scheme, host, and port', function () {
-      expect(Client.prototype.base.call({
-        scheme: 'https',
-        host: 'iron',
-        port: 443
-      }))
-      .to.equal('https://iron:443');
+      expect(client.base()).to.equal('https://iron:443');
     });
-    
+
   });
 
   describe('#request', function () {
