@@ -7,14 +7,14 @@ var pkg         = require('../package.json');
 
 function IronClient () {}
 
-var IronError = createError('IronError');
+IronClient.IronError = createError('IronError');
 
 function request () {
   // arguments: method, url, data, options
   return needle.requestAsync.apply(needle, arguments)
     .spread(function (response) {
       if (response.statusCode >= 400) {
-        throw new IronError(response.body ? response.body.msg : void 0, {
+        throw new IronClient.IronError(response.body ? response.body.msg : 'Unknown error', {
           statusCode: response.statusCode,
           body: response.body
         });
@@ -58,11 +58,5 @@ IronClient.prototype.request = function () {
 };
 
 IronClient.prototype.version = pkg.version;
-
-Object.defineProperty(IronClient.prototype, 'headers', {
-  get: function () {
-    return 'iron-node/v' + this.version;
-  }
-});
 
 module.exports = IronClient;
