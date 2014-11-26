@@ -21,12 +21,12 @@ describe('IronClient', function () {
       var request = client.request().reflect();
       expect(needle.request).to.have.been.calledOnce;
       return Promise
-        .delay(10 + 1)
+        .delay(15)
         .then(function () {
           expect(request.isPending()).to.be.true;
           expect(needle.request).to.have.been.calledTwice;
         })
-        .delay(10 * 2 + 1)
+        .delay(25)
         .then(function () {
           expect(needle.request).to.have.been.calledThrice;
           return request;
