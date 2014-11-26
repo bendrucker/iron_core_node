@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "chai": "1",
-    "chai-as-promised": "4",
+    "chai-as-promised": "~4.1.1",
     "gulp": "3",
     "gulp-istanbul": "0.3",
     "gulp-jshint": "1",
@@ -29,6 +29,7 @@
     "gulp-mocha": "1",
     "jshint-stylish": "1",
     "mocha": "1",
+    "nock": "~0.51.0",
     "sinon": "1",
     "sinon-as-promised": "^1",
     "sinon-chai": "2",

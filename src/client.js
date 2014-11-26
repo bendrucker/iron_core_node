@@ -20,15 +20,15 @@ IronClient.prototype.base = function () {
 function request () {
   // arguments: method, url, data, options
   return needle.requestAsync.apply(needle, arguments)
-    .spread(function (response) {
+    .spread(function (response, body) {
       if (response.statusCode >= 400) {
-        throw new IronClient.IronError(response.body ? response.body.msg : 'Unknown error', {
+        throw new IronClient.IronError(body.msg || 'Unknown error', {
           statusCode: response.statusCode,
-          body: response.body
+          body: Buffer.isBuffer(body) ? body.toString() : body
         });
       }
       else {
-        return response.body;
+        return body;
       }
     });
 
