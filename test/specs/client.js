@@ -11,6 +11,19 @@ describe('IronClient', function () {
     client = new Client();
   });
 
+  describe('#base', function () {
+
+    it('generates a url from the scheme, host, and port', function () {
+      expect(Client.prototype.base.call({
+        scheme: 'https',
+        host: 'iron',
+        port: 443
+      }))
+      .to.equal('https://iron:443');
+    });
+    
+  });
+
   describe('#request', function () {
 
     it('performs exponential backoff until a maximum retry limit', function () {

@@ -3,6 +3,7 @@
 var Promise     = require('bluebird');
 var needle      = Promise.promisifyAll(require('needle'));
 var createError = require('create-error');
+var util        = require('util');
 var config      = require('./config');
 
 function IronClient (product, options) {
@@ -11,6 +12,10 @@ function IronClient (product, options) {
 }
 
 IronClient.IronError = createError('IronError');
+
+IronClient.prototype.base = function () {
+  return util.format('%s://%s:%d', this.scheme, this.host, this.port);
+}
 
 function request () {
   // arguments: method, url, data, options
