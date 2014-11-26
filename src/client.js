@@ -3,9 +3,12 @@
 var Promise     = require('bluebird');
 var needle      = Promise.promisifyAll(require('needle'));
 var createError = require('create-error');
-var pkg         = require('../package.json');
+var config      = require('./config');
 
-function IronClient () {}
+function IronClient (product, options) {
+  this.product = product;
+  this.config  = config.load(product, options);
+}
 
 IronClient.IronError = createError('IronError');
 
@@ -50,13 +53,11 @@ IronClient.prototype.request = function () {
         delay = self.retryDelay * Math.pow(2, retries);
         retries++;
         return Promise.delay(delay).then(function () {
-          return attemptRequest.apply(null, args)
+          return attemptRequest.apply(null, args);
         });
       });
   }
   return attemptRequest();
 };
-
-IronClient.prototype.version = pkg.version;
 
 module.exports = IronClient;
