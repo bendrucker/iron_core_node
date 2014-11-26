@@ -19,6 +19,6 @@ gulp.task('test', ['cover'], function () {
   return gulp.src('./test/specs/**/*.js')
     .pipe(plugins.mocha())
     .pipe(plugins.istanbul.writeReports({
-      reporters: ['text']
+      reporters: ['text', 'lcov']
     }));
 });
